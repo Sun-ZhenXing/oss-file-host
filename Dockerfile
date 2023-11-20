@@ -6,23 +6,26 @@ ARG PYPI_MIRROR_URL=https://pypi.tuna.tsinghua.edu.cn/simple
 
 COPY . ./
 
-RUN pip -V \
-    && pip config set global.index-url ${PYPI_MIRROR_URL} \
-    && python -m pip install -U pip \
-    && pip install Cython \
-    && python setup.py build_ext -b lib \
-    && cp -rf requirements.txt lib/
+RUN pip -V && \
+    pip config set global.index-url ${PYPI_MIRROR_URL} && \
+    python -m pip install -U pip && \
+    pip install Cython && \
+    python setup.py build_ext -b lib && \
+    cp -rf requirements.txt lib/ && \
+    cp -rf .env lib/
 
 FROM python:3.10-slim-bookworm
 
 WORKDIR /app
 
+ARG PYPI_MIRROR_URL=https://pypi.tuna.tsinghua.edu.cn/simple
+
 COPY --from=builder /app/lib /app
 
-RUN pip -V \
-    && pip config set global.index-url ${PYPI_MIRROR_URL} \
-    && python -m pip install -U pip \
-    && pip install -r requirements.txt
+RUN pip -V && \
+    pip config set global.index-url ${PYPI_MIRROR_URL} && \
+    python -m pip install -U pip && \
+    pip install -r requirements.txt
 
 EXPOSE 8000
 

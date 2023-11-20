@@ -24,5 +24,6 @@ sanic server.app --host=0.0.0.0 --port=8000 --fast
 Docker 部署：
 
 ```bash
-docker build -t oss-host .
+docker build -t oss-file-host .
+docker run -d -p 8000:8000 --name oss-file-host oss-file-host
 ```
