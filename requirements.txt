@@ -1,0 +1,5 @@
+# Sanic
+sanic
+sanic-ext
+oss2
+python-dotenv
